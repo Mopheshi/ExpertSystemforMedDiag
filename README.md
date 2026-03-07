@@ -9,7 +9,7 @@ This repository contains the proof-of-concept for a novel Neuro-Symbolic Medical
 
 The current landscape of AI in healthcare suffers from the "black box" problem, where neural networks cannot explain their diagnostic reasoning. This project solves that by restricting the neural network entirely to data extraction, passing structured clinical facts to a deterministic, rule-based inference engine.
 
-This system is explicitly engineered for under-resourced clinics, such as those in Adamawa State, Nigeria, where advanced laboratory infrastructure is limited, and complex diagnostic reasoning is critical for patient survival.
+This system is explicitly engineered for under-resourced clinics, where advanced laboratory infrastructure is limited, and complex diagnostic reasoning is critical for patient survival.
 
 ## Clinical Focus: Endemic Febrile Illnesses
 To rigorously test the system's mathematical logic, the knowledge base focuses on differentiating four overlapping tropical diseases that share nearly identical initial clinical presentations. The diagnostic rules are strictly grounded in peer-reviewed clinical guidelines from the WHO, CDC, and NHS:
