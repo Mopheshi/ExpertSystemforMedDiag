@@ -1,0 +1,5 @@
+2026-03-11 15:34:39,967 | UNMAPPED symptom detected: 'catarrh' (CF=0.70)
+2026-03-11 15:34:39,967 | UNMAPPED symptom detected: 'running_nose' (CF=0.70)
+2026-03-11 22:39:29,056 | UNMAPPED symptom detected: 'ear_pain' (CF=0.30)
+2026-03-11 22:39:29,057 | UNMAPPED symptom detected: 'eye_pain' (CF=0.70)
+2026-03-11 22:39:29,058 | UNMAPPED symptom detected: 'loss_of_appetite' (CF=0.80)

@@ -1,0 +1,86 @@
+{
+  "diseases": ["malaria", "typhoid", "dengue", "lassa_fever"],
+  "rules": [
+    {
+      "id": "R01",
+      "hypothesis": "malaria",
+      "conditions": [
+        {"symptom": "high_temperature"},
+        {"symptom": "chills_and_rigors"},
+        {"symptom": "heavy_sweating"}
+      ],
+      "rule_cf": 0.85
+    },
+    {
+      "id": "R02",
+      "hypothesis": "malaria",
+      "conditions": [
+        {"symptom": "cyclical_fever_48h"},
+        {"symptom": "headache"},
+        {"symptom": "jaundice_yellow_eyes"}
+      ],
+      "rule_cf": 0.90
+    },
+    {
+      "id": "R03",
+      "hypothesis": "typhoid",
+      "conditions": [
+        {"symptom": "gradually_increasing_high_fever"},
+        {"symptom": "abdominal_pain"},
+        {"symptom": "constipation"}
+      ],
+      "rule_cf": 0.75
+    },
+    {
+      "id": "R04",
+      "hypothesis": "typhoid",
+      "conditions": [
+        {"symptom": "persistent_fever"},
+        {"symptom": "rose_spots_rash_on_trunk"},
+        {"symptom": "extreme_tiredness"}
+      ],
+      "rule_cf": 0.85
+    },
+    {
+      "id": "R05",
+      "hypothesis": "dengue",
+      "conditions": [
+        {"symptom": "sudden_high_fever_40C"},
+        {"symptom": "retro_orbital_pain"},
+        {"symptom": "severe_bone_joint_pain"}
+      ],
+      "rule_cf": 0.90
+    },
+    {
+      "id": "R07",
+      "hypothesis": "lassa_fever",
+      "conditions": [
+        {"symptom": "slight_fever"},
+        {"symptom": "facial_and_neck_swelling"},
+        {"symptom": "general_weakness"}
+      ],
+      "rule_cf": 0.85
+    },
+    {
+      "id": "R08",
+      "hypothesis": "lassa_fever",
+      "conditions": [
+        {"symptom": "fever"},
+        {"symptom": "deafness_or_hearing_loss"},
+        {"symptom": "chest_pain"}
+      ],
+      "rule_cf": 0.90
+    },
+    {
+      "id": "R09",
+      "hypothesis": "lassa_fever",
+      "conditions": [
+        {"symptom": "fever"},
+        {"symptom": "mucosal_bleeding_eyes_gums"},
+        {"symptom": "difficulty_breathing"}
+      ],
+      "rule_cf": 0.95
+    }
+  ]
+}
+
