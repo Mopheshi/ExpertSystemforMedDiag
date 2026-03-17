@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuro-Symbolic Medical Expert System</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vis.js Network -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10 shadow-sm">
+        <div>
+            <h1 class="text-xl font-semibold text-slate-900 tracking-tight">Neuro-Symbolic Medical Expert System</h1>
+            <p class="text-sm text-slate-500">Endemic West African Febrile Illness Differentiator</p>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full border border-blue-100">v1.0.0</span>
+            <div class="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-xs">AI</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex overflow-hidden">
+
+        <!-- Left Column: Input & Results -->
+        <div class="w-1/3 min-w-[400px] flex flex-col border-r border-slate-200 bg-white z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+
+            <!-- Input Panel -->
+            <div class="p-6 border-b border-slate-100">
+                <label for="complaint" class="block text-sm font-medium text-slate-700 mb-2">Patient Clinical Complaint</label>
+                <textarea id="complaint"
+                    class="w-full h-32 p-3 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition-all placeholder:text-slate-400"
+                    placeholder="Describe symptoms in natural language (e.g., 'Patient has high fever, severe headache, and joint pain...')..."></textarea>
+
+                <div class="mt-4 flex justify-end">
+                    <button id="diagnose-btn" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg shadow-sm transition-colors flex items-center group disabled:opacity-70 disabled:cursor-not-allowed">
+                        <span>Run Diagnostic</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                        <svg class="animate-spin ml-2 h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Diagnosis Panel -->
+            <div class="flex-1 overflow-y-auto p-6 bg-slate-50/50">
+
+                <!-- 1. Extracted Symptoms Section -->
+                <div id="mapped-symptoms-container" class="mb-8 hidden">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Extracted Symptoms</h3>
+                    <div id="mapped-symptoms-list" class="flex flex-wrap gap-2">
+                        <!-- Dynamic Tags -->
+                    </div>
+                </div>
+
+                <!-- 2. Results Section -->
+                <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Diagnostic Probabilities</h3>
+
+                <div id="results-container" class="space-y-3">
+                    <!-- Dynamic Results -->
+                    <div class="text-center py-10 text-slate-400 text-sm">
+                        Waiting for input...
+                    </div>
+                </div>
+
+                <!-- 3. Unmapped Symptoms Warning -->
+                <div id="unmapped-warning" class="mt-6 hidden">
+
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-amber-800">Unmapped Symptoms</h3>
+                                <div class="mt-1 text-xs text-amber-700">
+                                    <p id="unmapped-list"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: XAI Visualization -->
+        <div class="flex-1 flex flex-col bg-slate-50 relative">
+            <div class="absolute top-4 right-4 z-10 flex space-x-2">
+                 <div class="bg-white/80 backdrop-blur px-3 py-1.5 rounded-md border border-slate-200 text-xs font-medium text-slate-500 shadow-sm">
+                    Drag to pan • Scroll to zoom
+                 </div>
+            </div>
+
+            <div id="network-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+
+            <div class="h-12 border-t border-slate-200 bg-white flex items-center justify-between px-6 text-xs text-slate-400">
+                 <span>Evidence-Weighted DAG Visualisation</span>
+                 <div class="flex items-center space-x-4">
+                     <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-slate-200 mr-1.5"></span> Symptom</span>
+                     <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-slate-800 mr-1.5"></span> Disease</span>
+                     <span class="flex items-center"><span class="w-8 h-0.5 bg-slate-300 mr-1.5"></span> Contribution</span>
+                 </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- App Logic -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
+

@@ -144,13 +144,21 @@ Every rule that fired, the symptoms that triggered it, and the exact mathematica
 ```
 ExpertSystemforMedDiag/
 │
-├── main.py                     # Entry point — thin launcher
+├── app.py                      # Flask Web Server — API & Frontend Handler
+├── main.py                     # CLI Entry point — thin launcher
 ├── knowledge_base.json         # Decoupled disease rules & symptom vocabulary
 ├── requirements.txt            # Python dependencies
 ├── .env                        # Your Gemini API key (create from .env.example)
 ├── .env.example                # Template for the .env file
 ├── unmapped_symptoms.log       # Auto-generated log of unrecognised symptoms
 ├── README.md                   # This file
+│
+├── templates/                  # HTML Templates (Single Page App)
+│   └── index.html              # The Web UI
+│
+├── static/                     # Frontend Assets
+│   ├── app.js                  # Frontend Logic (API calls, DAG rendering)
+│   └── style.css               # Custom Styles
 │
 └── engine/                     # Core package (clean architecture)
     ├── __init__.py             # Public API exports
@@ -215,6 +223,13 @@ copy .env.example .env
 
 ### Run the system
 
+**Option 1: Web Interface (Recommended)**
+```bash
+python app.py
+# Open http://127.0.0.1:5000 in your browser
+```
+
+**Option 2: CLI Mode**
 ```bash
 python main.py
 # or
