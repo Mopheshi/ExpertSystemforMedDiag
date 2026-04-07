@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/python-3.13%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.12+"/>
+  <img src="https://img.shields.io/badge/python-3.13%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.13+"/>
   <img src="https://img.shields.io/badge/Gemini-2.5--flash-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini 2.5 Flash"/>
   <img src="https://img.shields.io/badge/architecture-Neuro--Symbolic-blueviolet?style=for-the-badge" alt="Neuro-Symbolic"/>
   <img src="https://img.shields.io/badge/licence-MIT-green?style=for-the-badge" alt="MIT Licence"/>
@@ -21,6 +21,7 @@
 - [Project Structure](#-project-structure)
 - [Setup & Installation](#-setup--installation)
 - [Usage](#-usage)
+- [Comparative Benchmarking](#-comparative-benchmarking)
 - [Knowledge Base](#-knowledge-base)
 - [CF Mathematics](#-cf-mathematics-mycin)
 - [Audit Trail & Explainability](#-audit-trail--explainability)
@@ -146,10 +147,13 @@ ExpertSystemforMedDiag/
 │
 ├── app.py                      # Flask Web Server — API & Frontend Handler
 ├── main.py                     # CLI Entry point — thin launcher
+├── evaluate.py                 # Batch evaluator for comparative benchmarking
 ├── knowledge_base.json         # Decoupled disease rules & symptom vocabulary
 ├── requirements.txt            # Python dependencies
 ├── .env                        # Your Gemini API key (create from .env.example)
 ├── .env.example                # Template for the .env file
+├── vignettes_dataset.csv       # Benchmark dataset (expected by evaluate.py)
+├── evaluation_results.json     # Generated benchmark metrics output (after evaluation)
 ├── unmapped_symptoms.log       # Auto-generated log of unrecognised symptoms
 ├── README.md                   # This file
 │
@@ -273,6 +277,44 @@ python -m engine
 ```
 
 Type `quit`, `exit`, or `q` to end the session.
+
+---
+
+## 📈 Comparative Benchmarking
+
+The project now includes `evaluate.py` for side-by-side empirical comparison of three systems on the same vignette dataset:
+
+1. **Neuro-Symbolic** (full pipeline)
+2. **Pure LLM** (direct Gemini diagnosis)
+3. **Classical Rule-Based** (keyword matching + symbolic inference)
+
+### Run Benchmark
+
+```bash
+# Uses default dataset: vignettes_dataset.csv
+python evaluate.py
+
+# Explicit dataset path
+python evaluate.py --dataset vignettes_dataset.csv --delay 2.0
+
+# Offline/low-cost mode: skip direct LLM baseline
+python evaluate.py --dataset vignettes_dataset.csv --skip-llm
+```
+
+### Required Dataset Columns
+
+`evaluate.py` expects these CSV columns:
+
+- `vignette_id`
+- `true_label`
+- `vignette_text`
+
+### Benchmark Outputs
+
+- Per-system classification reports in terminal
+- Side-by-side precision/recall/F1 comparison table in terminal
+- LaTeX table block for paper inclusion (printed in terminal)
+- Reproducibility artifact saved to `evaluation_results.json`
 
 ---
 
@@ -401,6 +443,7 @@ All tuneable parameters live in `engine/config.py`:
 | `GEMINI_API_KEY environment variable is not set` | Missing `.env` file or key | Copy `.env.example` to `.env` and add your key |
 | `429 RESOURCE_EXHAUSTED` | Free-tier Gemini quota used up | Wait for daily reset or upgrade at [ai.dev/rate-limit](https://ai.dev/rate-limit) |
 | `Knowledge base not found` | `knowledge_base.json` missing or moved | Ensure it's in the project root directory |
+| `Dataset not found: vignettes_dataset.csv` | Incorrect file path or wrong working directory | Run from project root, or pass an absolute path to `--dataset` |
 | `No rules were triggered` | Extracted symptoms don't match any full rule set | The system will attempt backward chaining to gather more evidence |
 
 ---
