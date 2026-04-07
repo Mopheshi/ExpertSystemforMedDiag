@@ -41,6 +41,14 @@ RULE 1: VOCABULARY MATCHING
 You must map the patient's natural language to the following exact symptom keys whenever possible:
 ["high_temperature", "chills_and_rigors", "heavy_sweating", "cyclical_fever_48h", "headache", "jaundice_yellow_eyes", "gradually_increasing_high_fever", "abdominal_pain", "constipation", "persistent_fever", "rose_spots_rash_on_trunk", "extreme_tiredness", "sudden_high_fever_40C", "retro_orbital_pain", "severe_bone_joint_pain", "slight_fever", "facial_and_neck_swelling", "general_weakness", "fever", "deafness_or_hearing_loss", "chest_pain", "mucosal_bleeding_eyes_gums", "difficulty_breathing"]
 
+RULE 1.5: SYNONYM MAPPING (CRITICAL)
+You must aggressively map patient variations to the exact vocabulary terms:
+- If the patient mentions "sweating profusely" or "heavy sweating", map to "heavy_sweating".
+- If the patient mentions "yellow eyes" or "jaundice", map to "jaundice_yellow_eyes".
+- If the patient mentions "bleeding gums", "nosebleed", or "bleeding from eyes", map to "mucosal_bleeding_eyes_gums".
+- If the patient mentions "deafness" or "can't hear", map to "deafness_or_hearing_loss".
+- If the patient mentions "fever every 48 hours", map to "cyclical_fever_48h".
+
 RULE 2: KNOWLEDGE EXPANSION
 If a clinically relevant symptom is described that does not match the vocabulary above, extract it anyway using snake_case (e.g., "vomiting_blood"). The downstream system will log this for knowledge expansion.
 
