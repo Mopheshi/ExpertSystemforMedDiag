@@ -4,18 +4,18 @@ app.py – Flask Backend for Neuro-Symbolic Medical Expert System
 Server connecting the Python inference engine to the web frontend.
 """
 
-import os
-import json
 import logging
+import os
+
 from flask import Flask, request, jsonify, render_template
 
 # --- Import from the Engine Package ---
 from engine.config import GEMINI_MODEL
+from engine.explanation import ExplanationFacility
+from engine.inference import InferenceEngine
 from engine.knowledge_base import KnowledgeBase
 from engine.neural_layer import GeminiNeuralLayer
 from engine.unification import UnificationLayer
-from engine.inference import InferenceEngine
-from engine.explanation import ExplanationFacility
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -58,7 +58,7 @@ def get_kb_graph_structure():
     """
     if not kb:
         return {"nodes": [], "edges": []}
-    
+
     structure = {
         "rules": kb.rules,
         "diseases": kb.diseases
@@ -68,7 +68,12 @@ def get_kb_graph_structure():
 
 @app.route('/')
 def index():
-    """Serve the single-page application."""
+    """
+    Serve the single-page application.
+
+    This function renders the main HTML template which acts as the
+    user interface for the expert system.
+    """
     return render_template('index.html')
 
 
@@ -76,11 +81,17 @@ def index():
 def diagnose():
     """
     API Endpoint for Diagnosis.
+
     Expects JSON: { "complaint": "patient details..." }
     Returns JSON: { "diagnosis": { "disease": cf, ... }, "audit_trail": [ ... ] }
+
+    This function orchestrates the diagnosis pipeline:
+    1. Extracts symptoms using the neural layer.
+    2. Unifies symptoms with the knowledge base.
+    3. Triggers the inference engine to perform forward chaining.
     """
     if not kb or not neural_layer:
-        return jsonify({"error": "Server is not fully initialized (KB or Neural Layer missing)."}), 503
+        return jsonify({"error": "Server is not fully initialised (KB or Neural Layer missing)."}), 503
 
     data = request.get_json()
     if not data or 'complaint' not in data:
@@ -95,8 +106,6 @@ def diagnose():
     try:
         # --- Step 1: Neural Symptom Extraction ---
         raw_symptoms = neural_layer.extract_symptoms(complaint)
-        # Fix for 0.00 issue: Ensure specific heavy symptoms are present for testing if complaint is vague? 
-        # No, trust the engine.
         logger.info(f"Gemini extracted: {raw_symptoms}")
 
         # --- Step 2: Unification ---
@@ -125,7 +134,7 @@ def diagnose():
             "audit_trail": engine.audit_trail,
             "mapped_symptoms": mapped_facts,
             "unmapped_symptoms": list(unmapped.keys()),
-            "kb_structure": get_kb_graph_structure() # Send full graph structure for visualisation
+            "kb_structure": get_kb_graph_structure()  # Send full graph structure for visualisation
         }
 
         return jsonify(response)
@@ -138,4 +147,3 @@ def diagnose():
 if __name__ == '__main__':
     # Run the Flask app
     app.run(debug=True, port=5000)
-

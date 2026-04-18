@@ -57,7 +57,7 @@ The system is **not a black box** — every diagnostic conclusion is fully trace
                            │
                            ▼
               ┌────────────────────────┐
-              │   🧠 NEURAL LAYER      │
+              │    NEURAL LAYER        │
               │   (Gemini 2.5 Flash)   │
               │                        │
               │  Extracts symptoms as  │
@@ -67,7 +67,7 @@ The system is **not a black box** — every diagnostic conclusion is fully trace
                           │
                           ▼
               ┌────────────────────────┐
-              │  🔗 UNIFICATION LAYER  │
+              │   UNIFICATION LAYER    │
               │                        │
               │  Maps neural output    │
               │  → KB vocabulary       │
@@ -76,7 +76,7 @@ The system is **not a black box** — every diagnostic conclusion is fully trace
                           │
                           ▼
               ┌────────────────────────┐
-              │  ⚙️ INFERENCE ENGINE   │
+              │   INFERENCE ENGINE     │
               │  (Evidence-Weighted    │
               │       DAG)             │
               │                        │
@@ -87,7 +87,7 @@ The system is **not a black box** — every diagnostic conclusion is fully trace
                           │
                           ▼
               ┌────────────────────────┐
-              │  📊 EXPLANATION        │
+              │   EXPLANATION          │
               │     FACILITY           │
               │                        │
               │  Audit trail (JSON)    │
@@ -201,7 +201,7 @@ ExpertSystemforMedDiag/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/ExpertSystemforMedDiag.git
+git clone https://github.com/Mopheshi/ExpertSystemforMedDiag.git
 cd ExpertSystemforMedDiag
 
 # 2. Create and activate a virtual environment
@@ -314,7 +314,7 @@ python evaluate.py --dataset vignettes_dataset.csv --skip-llm
 - Per-system classification reports in terminal
 - Side-by-side precision/recall/F1 comparison table in terminal
 - LaTeX table block for paper inclusion (printed in terminal)
-- Reproducibility artifact saved to `evaluation_results.json`
+- Reproducibility artefact saved to `evaluation_results.json`
 
 ---
 
@@ -419,7 +419,7 @@ The system is **not a black box**. Every consultation produces:
 
 ## ⚙️ Configuration
 
-All tuneable parameters live in `engine/config.py`:
+All tunable parameters live in `engine/config.py`:
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|

@@ -157,3 +157,6 @@
 2026-04-07 23:15:51,742 | UNMAPPED symptom detected: 'pelvic_pressure' (CF=0.70)
 2026-04-07 23:15:55,786 | UNMAPPED symptom detected: 'swelling' (CF=0.80)
 2026-04-07 23:15:55,786 | UNMAPPED symptom detected: 'bruising' (CF=0.80)
+2026-04-18 13:29:21,922 | UNMAPPED symptom detected: 'nausea' (CF=0.70)
+2026-04-18 13:29:21,923 | UNMAPPED symptom detected: 'dizziness' (CF=0.40)
+2026-04-18 13:30:04,218 | UNMAPPED symptom detected: 'confusion' (CF=0.70)
