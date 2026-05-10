@@ -160,3 +160,8 @@
 2026-04-18 13:29:21,922 | UNMAPPED symptom detected: 'nausea' (CF=0.70)
 2026-04-18 13:29:21,923 | UNMAPPED symptom detected: 'dizziness' (CF=0.40)
 2026-04-18 13:30:04,218 | UNMAPPED symptom detected: 'confusion' (CF=0.70)
+2026-05-10 19:52:17,724 | UNMAPPED symptom detected: 'joint_pains' (CF=0.75)
+2026-05-10 20:20:25,626 | UNMAPPED symptom detected: 'vomiting' (CF=0.70)
+2026-05-10 20:23:35,198 | UNMAPPED symptom detected: 'nausea' (CF=0.70)
+2026-05-10 20:23:35,198 | UNMAPPED symptom detected: 'vomiting' (CF=0.70)
+2026-05-10 20:23:35,198 | UNMAPPED symptom detected: 'diarrhea' (CF=0.70)

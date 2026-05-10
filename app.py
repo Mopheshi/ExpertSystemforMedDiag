@@ -145,5 +145,8 @@ def diagnose():
 
 
 if __name__ == '__main__':
-    # Run the Flask app
-    app.run(debug=True, port=5000)
+    # # Run the Flask app
+    # app.run(debug=True, port=5000)
+
+    # Run the Flask app accessible from other devices on the same network
+    app.run(host='0.0.0.0', debug=True, port=5000)
